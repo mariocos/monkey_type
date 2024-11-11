@@ -63,11 +63,13 @@ void	monkey_loop(char *target)
 		else
 			start = true;
 	}
-	return (1);
+
+	// void return (1)
+	return;
 }
 
 
-int	main(int argc, char **argv)
-{
-	srand(time(NULL));
-}
+// int	main(int argc, char **argv)
+// {
+// 	srand(time(NULL));
+// }
