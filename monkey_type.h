@@ -7,7 +7,15 @@
 #include <semaphore.h>
 #include <string.h>
 #include <time.h>
-#include <dispatch/dispatch.h>
+//#include <dispatch/dispatch.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+#define CLEAR_SCREEN "\033[H\033[J"
+#define RESET_CURSOR "\033[H"
+#define NUM_CELEBRATION_FRAMES (sizeof(celebration_frames) / sizeof(celebration_frames[0]))
 
 #define WORD_LENGTH 20
 

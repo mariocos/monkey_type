@@ -65,6 +65,7 @@ void *monkey_typing(void *arg) {
             dispatch_semaphore_wait(match_sem, DISPATCH_TIME_FOREVER);
             if (strcmp(generated_word, monkey_call()->target_words[monkey_call()->target_word_index]) == 0) {
                 printf("Monkey %d typed the correct word: %s\n", monkey_id, generated_word);
+				celebrate();
 
                 // Move to the next word
                 monkey_call()->target_word_index++;
@@ -77,6 +78,35 @@ void *monkey_typing(void *arg) {
         }
     }
     return NULL;
+}
+
+const char *celebration_frames[] = {
+    "   \\(o_o)/   \n"
+    "     ( )     \n"
+    "    /   \\    \n",
+
+    "   \\(^_^)   \n"
+    "     ( )  \\   \n"
+    "    /   \\    \n",
+
+    "    (^_^)/   \n"
+    "   / ( )     \n"
+    "    /   \\    \n",
+
+    "   \\(^_^)    \n"
+    "     ( )     \n"
+    "    /   \\    \n",
+};
+
+void celebrate() {
+    for (int i = 0; i < 10; i++) { // Loop through animation frames a few times
+        // Display each frame
+        printf(CLEAR_SCREEN); // Clear the screen
+        printf("%s", celebration_frames[i % NUM_CELEBRATION_FRAMES]); // Show the frame
+        printf(RESET_CURSOR); // Reset cursor to the top
+        fflush(stdout); // Force immediate output
+        usleep(200000); // Delay between frames (200 ms)
+    }
 }
 
 int main(int argc, char *argv[]) {
