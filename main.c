@@ -3,6 +3,8 @@
 dispatch_semaphore_t match_sem;
 dispatch_semaphore_t word_sem;
 
+void celebrate(int monkey_id, char *generated_word);
+
 // Function to read words from file
 int read_words(const char *filename) {
     FILE *file = fopen(filename, "r");
@@ -64,8 +66,8 @@ void *monkey_typing(void *arg) {
             // Check if generated word matches the target word
             dispatch_semaphore_wait(match_sem, DISPATCH_TIME_FOREVER);
             if (strcmp(generated_word, monkey_call()->target_words[monkey_call()->target_word_index]) == 0) {
-                printf("Monkey %d typed the correct word: %s\n", monkey_id, generated_word);
-				celebrate();
+                // printf("Monkey %d typed the correct word: %s\n", monkey_id, generated_word);
+				celebrate(monkey_id, generated_word);
 
                 // Move to the next word
                 monkey_call()->target_word_index++;
@@ -98,10 +100,11 @@ const char *celebration_frames[] = {
     "    /   \\    \n",
 };
 
-void celebrate() {
+void celebrate(int monkey_id, char *generated_word) {
     for (int i = 0; i < 10; i++) { // Loop through animation frames a few times
         // Display each frame
         printf(CLEAR_SCREEN); // Clear the screen
+        printf("Monkey %d typed the correct word: %s\n", monkey_id, generated_word);
         printf("%s", celebration_frames[i % NUM_CELEBRATION_FRAMES]); // Show the frame
         printf(RESET_CURSOR); // Reset cursor to the top
         fflush(stdout); // Force immediate output
